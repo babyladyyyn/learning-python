@@ -1,0 +1,186 @@
+
+
+zip:
+>>> alist = ['a1', 'a2', 'a3']
+>>> blist = ['1', '2', '3']
+>>> zip(alist,blist)
+
+
+>>> type(())
+<type 'tuple'>
+>>> type([])
+<type 'list'>
+>>> type({})
+<type 'dict'>
+>>> help(tuple)
+
+>>> type(object)
+<type 'type'>
+>>> help(type)
+
+>>> type(object)
+<type 'type'>
+>>> help(type)
+
+
+yield:
+import os
+def tree(top):
+    for path, names, fnames in os.walk(top):
+        for fname in fnames:
+            yield os.path.join(path, fname)
+
+for name in tree('C:\Users\XXX\Downloads\Test'):
+    print name
+
+
+@decorator 1
+def authenticated(method):
+    def wrapper(user, *args):
+        if not is_user_valid(user):
+            redirect("/auth/login/")
+            log_warning(" %s is trying to enter without permission!" %(user["name"]))
+            return False
+        return method(user, *args)
+    return wrapper
+@authenticated
+def build(user, build_name):
+    return create_building(build_name)
+
+
+
+@class_method
+
+
+上下文管理库(ContextLib)
+contextlib模块包含了与上下文管理器和with声明相关的工具。通常如果你想写一个上下文管理器，则你需要定义一个类包含__enter__方法以及__exit__方法，例如：
+
+
+
+weakref,decorator class:
+import weakref
+class lazyattribute(object):
+    def __init__(self, f):
+        self.data = weakref.WeakKeyDictionary()
+        self.f = f
+    def __get__(self, obj, cls):
+        if obj not in self.data:
+            self.data[obj] = self.f(obj)
+        return self.data[obj]
+class Foo(object):
+    @lazyattribute
+    def bar(self):
+        print "Being lazy"
+        return 42
+f = Foo()
+print f.bar
+# Being lazy
+# 42
+print f.bar
+# 42
+
+
+1.子类化内建类型
+# -*- coding:utf-8 -*-
+class Folder(list):
+    def __init__(self, name):
+        self.name = name
+    def dir(self):
+        print "I am : %s" % self.name
+        for el in self:
+            print el
+a = Folder("test")
+a.append("test2")
+a.append("test3")
+a.dir()
+
+
+
+4.元编程
+new-style类带来了一种能力，可以通过两个特殊的方法—_ new _ 和_ metaclass _在运行时修改类和对象的定义。
+# -*- coding:utf-8 -*-
+# __new__方法必须返回一个类的实例。因此，它可以在对象创建之前或之后修改类
+# __init__很大程度上已经满足类实例化的进行初始化
+class MyClass(object):
+    def __new__(cls, *args, **kwargs):
+        print "__new__"
+        return object.__new__(cls)
+    def __init__(self):
+        print "__init__"
+# __metaclass__（元类）
+# 元类（metaclass）提供了在类对象通过工厂方法（factory）在内存中创建时进行交互的能力。它们的效果与
+# __new__类似，只不过是类级别上运行
+# 元类 一时半会看不懂，具体项目中也很少用到，以后用到了再来深度研究一下
+if __name__ == '__main__':
+    my_class = MyClass()
+    # 输出结果：
+    # __new__
+    # __init__
+
+
+lambda 嵌套lambda
+嵌套的lambda，如下：
+>>>def action(x):
+return (lambda y: x+y)
+>>>act=action(99)
+>>>act(2)
+101
+>>>action = (lambda x: (lambda y: x+y))
+>>>act = action(99)
+>>>act(2)
+101
+>>>((lambda x: (lambda y: x+y))(99))(2)
+101
+
+map(function, sequence[, sequence, ...]) -> iterator
+通过定义可以看到，这个函数的第一个参数是一个函数，剩下的参数是一个或多个序列，返回值是一个迭代器。
+function可以理解为是一个一对一或多对一函数，map的作用是以参数序列中的每一个元素调用function函数，返回包含每次function函数返回值的迭代器。
+返回可迭代对象，需要list调用来显示所有结果。
+>>> list(map(lambda x:x+2, [1, 2, 3]))
+[3, 4, 5]
+>>>list(map(pow,[1,2,3],[2,3,4]))
+[1,8,81]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
